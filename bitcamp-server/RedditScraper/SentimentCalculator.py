@@ -33,7 +33,10 @@ print(df)
 
 for index, row in df.iterrows():
     polarity_score = sia.polarity_scores(row['Title'])
-    print("row " + str(index) + ": " + " Sentiment Analysis Compound Score: " + str(polarity_score['compound']))
+    polarity_score_post_comments = sia.polarity_scores(row['Post Comments'])
+    print("row " + str(index) + ": " + row['Title'])
+    print("Sentiment Analysis Compound Score for Title: " + str(polarity_score['compound']))
+    print("Sentiment Analysis Compound Score for post comments: " + str(polarity_score_post_comments['compound']))
 
 
 
