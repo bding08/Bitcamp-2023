@@ -28,15 +28,19 @@ from nltk.sentiment.util import *
 
 sia = SentimentIntensityAnalyzer()
 
-df = pd.read_csv("Top Posts.csv")
+df = pd.read_csv("Filtered Post Data.csv")
 print(df)
 
 for index, row in df.iterrows():
-    polarity_score = sia.polarity_scores(row['Title'])
-    polarity_score_post_comments = sia.polarity_scores(row['Post Comments'])
+    polarity_score_title = sia.polarity_scores(row['Title'])
+
+
     print("row " + str(index) + ": " + row['Title'])
-    print("Sentiment Analysis Compound Score for Title: " + str(polarity_score['compound']))
-    print("Sentiment Analysis Compound Score for post comments: " + str(polarity_score_post_comments['compound']))
+    print("Sentiment Analysis Compound Score for Title: " + str(polarity_score_title['compound']))
 
 
-
+    if (row['Post Comments']):
+        polarity_score_post_comments = sia.polarity_scores(str(row['Post Comments']))
+        print("Sentiment Analysis Compound Score for post comments: " + str(polarity_score_post_comments['compound']))
+    else:
+        print("Sentiment Analysis Compound Score for post comments: " + " no comments to analyze")
