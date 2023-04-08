@@ -7,15 +7,21 @@ reddit_read_only = praw.Reddit(client_id="hVGVldw07s3UNW4rd3zlSQ",         # you
                                user_agent="Brian Ding")        # your user agent
  
  
-subreddit = reddit_read_only.subreddit("investing")
+subreddit = reddit_read_only.subreddit("Investing")
 df = pd.read_csv("stock_info_filtered.csv")
-print(df)
-ticker_column = df['Ticker']
+# print(df)
+# ticker_column = df['Ticker']
 # name_column = (df['Name'].str.replace(' Inc.', '').str.replace(' Technologies', '').str.replace(' Inc', '').str.replace(' Ltd', '')).apply(re.escape)
 # df['Name'] = df['Name'].str.replace(' Inc.', '').str.replace(' Technologies', '').str.replace(' Inc', '').str.replace(' Ltd', '')
 # df.to_csv("stock_info_filtered.csv", index=False)
 # print(ticker_column)
 # print(name_column)
+
+# df['Ticker']= df['Ticker'].apply(re.escape)
+# df['Name'] = df['Name'].str.replace(' Inc.', '').str.replace(' Technologies', '').str.replace(' Inc', '').str.replace(' Ltd', '')
+# df['Name'] = df['Name'].apply(re.escape)
+# df.to_csv("stock_info_filtered.csv", index=False)
+
 stock = {}
 # Display the name of the Subreddit
 print("Display Name:", subreddit.display_name)
@@ -32,15 +38,17 @@ print("Title:", subreddit.title)
 # for post in subreddit.top(limit=5):
 #     print(post.title)
 #     print()
-posts = subreddit.top(time_filter = "week", limit = 20)
+posts = subreddit.top(time_filter = "month", limit = 200)
 i = 1
-stock_regex = r"\b(" + "|".join(df['Name']) + r")\b"
+stock_regex = r"\b(" + "|".join(df['Ticker'] + "|" + df['Name']) + r")\b"
 # stock_regex = r'\bGoogle\b'
 for post in posts:
-    matches = re.findall(stock_regex, post.title)
-    if matches:
-        print(f"Post title: {post.title}")
-        print(f"Matches: {matches}")
+    if post.link_flair_text != 'Meme':
+        matches = re.findall(stock_regex, post.title)
+        if matches and len(matches[0]) > 1:
+            print(f"Post title: {post.title}")
+            print("Content:", post.selftext)
+            print(f"Matches: {matches}")
     # if post.link_flair_text != 'Meme' and re.search(stock_regex, post.title):
     #     print("Title:", post.title)
     #     print("Content:", post.selftext)
