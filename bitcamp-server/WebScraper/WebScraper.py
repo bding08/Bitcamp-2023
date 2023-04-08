@@ -99,7 +99,7 @@ def reddit_scraper(subreddit):
     post_data = pd.DataFrame(posts_dict)
     # print(top_posts)
 
-    return post_data.to_csv("Filtered Post Data.csv", index=False)
+    return post_data.to_csv("filtered_post_data.csv", index=False)
 
 # reddit_scraper("Investing")
 # news_scraper(['AMZN'])
