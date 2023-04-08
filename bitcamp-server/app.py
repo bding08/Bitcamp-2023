@@ -15,12 +15,7 @@ def hello_world():
 @app.route("/")
 def index():
     data = WebScraper.SentimentCalculator.calculate_sentiment(WebScraper.WebScraper.reddit_scraper("Investing")) 
-    stocksDataList = data.split(":")
-    print(stocksDataList)
-    eachStockData = []
     
-
-
     return data
 
    #data = [[f"Row {i+1}, Col {j+1}" for j in range(3)] for i in range(10)]
