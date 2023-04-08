@@ -6,6 +6,7 @@ from nltk.corpus import subjectivity
 from nltk.sentiment import SentimentAnalyzer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.sentiment.util import *
+from models import Stock
 
 # when running on your own laptop, uncomment the following below to download
 # necessary dependencies and NLTK libraries: 
@@ -34,6 +35,7 @@ def calculate_sentiment(csv_file):
     df = pd.read_csv("filtered_post_data.csv")
 
     for index, row in df.iterrows():
+        Stock = []
         polarity_score_title = sia.polarity_scores(row['Title'])
 
         output += str(row['Stock Keyword']) + "," + str(polarity_score_title['compound']) + ","
