@@ -1,6 +1,9 @@
 from flask import Flask, render_template, url_for
 from flask_bootstrap import Bootstrap
-from RedditScraper import reddit_scraper
+import WebScraper.SentimentCalculator
+import WebScraper.WebScraper
+import WebScraper
+
 app = Flask(__name__, template_folder="template")
 Bootstrap(app)
 
@@ -12,9 +15,11 @@ def hello_world():
 """
 @app.route("/")
 def index():
-   data = reddit_scraper(subreddit)
-   data = [[f"Row {i+1}, Col {j+1}" for j in range(3)] for i in range(10)]
-   return render_template('index.html', data=data)
+   data = WebScraper.SentimentCalculator.calculate_sentiment(WebScraper.WebScraper.reddit_scraper("Investing"))
+    
+   return "hello " + data
+   #data = [[f"Row {i+1}, Col {j+1}" for j in range(3)] for i in range(10)]
+   #return render_template('index.html', data=data)
 
 
 # render the index.html template with the data variable
