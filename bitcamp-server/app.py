@@ -15,8 +15,9 @@ def hello_world():
 @app.route("/")
 def index():
     data = WebScraper.SentimentCalculator.calculate_sentiment(WebScraper.WebScraper.reddit_scraper("Investing")) 
-    
-    return data
+    stock_list = [serialize(x) for x in data]
+
+    return stock_list
 
    #data = [[f"Row {i+1}, Col {j+1}" for j in range(3)] for i in range(10)]
    #return render_template('index.html', data=data)
@@ -30,3 +31,11 @@ def index():
 # <. newEnv/bin/activate>
 # If you are missing any dependencies, such as flask, sqlalchemy, sqlalchemy-cockroachdb, or psycopg2
 # pip install within the environment
+
+
+def serialize(stock_obj):
+    return {
+        "stock_keyword" : str(stock_obj.stock_keyword),
+        "tSentiment" : stock_obj.tSentiment,
+        "cSentiment" : stock_obj.cSentiment,
+    } 
