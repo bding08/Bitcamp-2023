@@ -30,7 +30,7 @@ from nltk.sentiment.util import *
 def calculate_sentiment(csv_file):
     sia = SentimentIntensityAnalyzer()
 
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv("filtered_post_data.csv")
     print(df)
 
     for index, row in df.iterrows():
