@@ -1,18 +1,26 @@
 
-<!DOCTYPE html>
+
 <html>
-<head>
-	<title>My App</title>
-</head>
-<body>
-	<table>
-	{% for row in data %}
-		<tr>
-			{% for value in row %}
-				<td>{{ value }}</td>
-			{% endfor %}
-		</tr>
-	{% endfor %}
-	</table>
-</body>
+<div class="row mt-4">
+    <div class="col col-md-6 offset-md-3 alert alert-primary bg-danger text-white text-center">
+      <span class="h1">Stocks Performance Vs Reddit Sentiment</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-md-6 offset-md-3">
+      <div class="row alert alert-warning bg-dark text-white">
+          <span class="col col-1 mt-0 h1 text-center">Stock Ticker</span>
+          <span class="col col-7 mt-0 h1 border-left border-light">Post Sentinment</span>
+          <span class="col col-4 mt-0 h1 border-left border-light text-right">Comments Sentiment</span>
+        </div>
+        {% for stock in stocks %}
+        <div class="row alert alert-warning">
+          <span class="col col-1 mt-0 h1 text-center">{{stock.stock_keyword}}</span>
+          <span class="col col-7 mt-0 border-left border-dark h1 text-truncate">{{stock.tSentiment}}</span>
+          <span class="col col-4 mt-0 border-left border-dark h1 text-right">{{stock.cSentiment}}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 </html>

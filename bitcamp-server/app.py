@@ -15,9 +15,9 @@ def hello_world():
 @app.route("/")
 def index():
     data = WebScraper.SentimentCalculator.calculate_sentiment(WebScraper.WebScraper.reddit_scraper("Investing")) 
-    stock_list = [serialize(x) for x in data]
+    json_obj_list = [serialize(x) for x in data]
 
-    return stock_list
+    return render_template("index.html", stocks=json_obj_list)
 
    #data = [[f"Row {i+1}, Col {j+1}" for j in range(3)] for i in range(10)]
    #return render_template('index.html', data=data)
