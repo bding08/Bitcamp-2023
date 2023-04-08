@@ -17,7 +17,7 @@ def hello_world():
 def index():
    data = WebScraper.SentimentCalculator.calculate_sentiment(WebScraper.WebScraper.reddit_scraper("Investing"))
     
-   return "hello " + data
+   return data
    #data = [[f"Row {i+1}, Col {j+1}" for j in range(3)] for i in range(10)]
    #return render_template('index.html', data=data)
 

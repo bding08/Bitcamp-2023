@@ -1,9 +1,9 @@
 import WebScraper
 import pandas as pd
 import nltk
-# from nltk.classify import NaiveBayesClassifier
-# from nltk.corpus import subjectivity
-# from nltk.sentiment import SentimentAnalyzer
+from nltk.classify import NaiveBayesClassifier
+from nltk.corpus import subjectivity
+from nltk.sentiment import SentimentAnalyzer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.sentiment.util import *
 
@@ -32,24 +32,18 @@ def calculate_sentiment(csv_file):
     sia = SentimentIntensityAnalyzer()
 
     df = pd.read_csv("filtered_post_data.csv")
-    print(df)
 
     for index, row in df.iterrows():
         polarity_score_title = sia.polarity_scores(row['Title'])
 
-        output += "row " + str(index) + ": " + row['Title'] + "\n"
-        print("row " + str(index) + ": " + row['Title'])
-        output += "Sentiment Analysis Compound Score for Title: " + str(polarity_score_title['compound']) + "\n"
-        print("Sentiment Analysis Compound Score for Title: " + str(polarity_score_title['compound']))
-
+        output += str(row['Stock Keyword']) + "," + str(polarity_score_title['compound']) + ","
 
         if (row['Post Comments']):
             polarity_score_post_comments = sia.polarity_scores(str(row['Post Comments']))
-            output += "Sentiment Analysis Compound Score for post comments: " + str(polarity_score_post_comments['compound']) + "\n"
-            print("Sentiment Analysis Compound Score for post comments: " + str(polarity_score_post_comments['compound']))
+
+            output += str(polarity_score_post_comments['compound']) + ":"
         else:
-            output += "Sentiment Analysis Compound Score for post comments: no comments to analyze \n"
-            print("Sentiment Analysis Compound Score for post comments: " + " no comments to analyze")
+            output += "-1:"
     return output
 
 # calculate_sentiment(WebScraper.reddit_scraper("Investing"))
