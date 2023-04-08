@@ -33,19 +33,15 @@ def calculate_sentiment(csv_file):
     sia = SentimentIntensityAnalyzer()
 
     df = pd.read_csv("filtered_post_data.csv")
-
+    Stock_List = []
     for index, row in df.iterrows():
-        Stock = []
         polarity_score_title = sia.polarity_scores(row['Title'])
-
-        output += str(row['Stock Keyword']) + "," + str(polarity_score_title['compound']) + ","
 
         if (row['Post Comments']):
             polarity_score_post_comments = sia.polarity_scores(str(row['Post Comments']))
-
-            output += str(polarity_score_post_comments['compound']) + ":"
+            Stock_List.append(Stock(row['Stock Keyword']), str(polarity_score_title['compound']),str(polarity_score_post_comments['compound']))
         else:
-            output += "-1:"
-    return output
+            Stock_List.append(Stock(row['Stock Keyword']), str(polarity_score_title['compound']),"No Comments")
+    return Stock_List
 
 # calculate_sentiment(WebScraper.reddit_scraper("Investing"))
