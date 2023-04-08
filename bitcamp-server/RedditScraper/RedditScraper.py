@@ -1,14 +1,76 @@
 import praw
 import pandas as pd
 import re
- 
-reddit_read_only = praw.Reddit(client_id="hVGVldw07s3UNW4rd3zlSQ",         # your client id
-                               client_secret="OsFqtnOsdyXyeTXXK6YhD_yjWV5uyg",      # your client secret
-                               user_agent="Brian Ding")        # your user agent
- 
- 
-subreddit = reddit_read_only.subreddit("Investing")
-df = pd.read_csv("stock_info_filtered.csv")
+
+def reddit_scraper(subreddit):
+    # Assigns PRAW API object to a variable
+    reddit_read_only = praw.Reddit(
+        client_id="hVGVldw07s3UNW4rd3zlSQ",                  # your client id
+        client_secret="OsFqtnOsdyXyeTXXK6YhD_yjWV5uyg",      # your client secret
+        user_agent="Brian Ding")                             # your user agent
+    
+    #Reads data from subreddit
+    subreddit = reddit_read_only.subreddit(subreddit)
+    df = pd.read_csv("stock_info_filtered.csv")
+
+    # Scraping the top posts of the current month
+    posts = subreddit.top(time_filter = "month", limit = 200)
+    
+    posts_dict = {"Title": [], 
+                  "Post Text": [],
+                  "ID": [], "Score": [],
+                  "Total Comments": [], 
+                  "Post URL": [], 
+                  "Post Comments": [], 
+                  "Stock Keyword": []
+                }
+    #Regex to check whether string matches either Ticker Symbol or Company Name
+    stock_regex = r"\b(" + "|".join(df['Ticker'] + "|" + df['Name']) + r")\b"
+
+    i = 1
+    for post in posts:
+        if post.link_flair_text != 'Meme':
+            matches = re.findall(stock_regex, post.title)
+            if matches and len(matches[0]) > 1:
+                # Title of each post
+                posts_dict["Title"].append(post.title)
+                
+                # Text inside a post
+                posts_dict["Post Text"].append(post.selftext)
+                
+                # Unique ID of each post
+                posts_dict["ID"].append(post.id)
+                
+                # The score of a post
+                posts_dict["Score"].append(post.score)
+                
+                # Total number of comments inside the post
+                posts_dict["Total Comments"].append(post.num_comments)
+                
+                # URL of each post
+                posts_dict["Post URL"].append(post.url)
+
+                comment_str = ""
+                for comment in post.comments[:5]:
+                    comment_str += (str(i) + " " + comment.body)
+                    i += 1
+
+                posts_dict["Post Comments"].append(comment_str)
+                i = 1
+
+                posts_dict["Stock Keyword"].append(matches[0])
+
+    # Saving the data in a pandas dataframe
+    post_data = pd.DataFrame(posts_dict)
+    # print(top_posts)
+
+    post_data.to_csv("Filtered Post Data.csv", index=False)
+
+reddit_scraper("Investing")
+
+
+#Testing Methods
+
 # print(df)
 # ticker_column = df['Ticker']
 # name_column = (df['Name'].str.replace(' Inc.', '').str.replace(' Technologies', '').str.replace(' Inc', '').str.replace(' Ltd', '')).apply(re.escape)
@@ -30,13 +92,6 @@ df = pd.read_csv("stock_info_filtered.csv")
  
 # Display the description of the Subreddit
 # print("Description:", subreddit.description)
-
-
-# subreddit = reddit_read_only.subreddit("Python")
- 
-# for post in subreddit.top(limit=5):
-#     print(post.title)
-#     print()
 
 # Printing and Testing
 # posts = subreddit.top(time_filter = "month", limit = 200)
@@ -68,51 +123,3 @@ df = pd.read_csv("stock_info_filtered.csv")
             
         # print("-----------------------------------------------")
         # i = 1
-
-# Scraping the top posts of the current month
-# posts = subreddit.top(time_filter = "week", limit = 5)
-posts = subreddit.top(time_filter = "month", limit = 200)
- 
-posts_dict = {"Title": [], "Post Text": [],
-              "ID": [], "Score": [],
-              "Total Comments": [], "Post URL": [], "Post Comments": [], "Stock Keyword": []
-              }
-stock_regex = r"\b(" + "|".join(df['Ticker'] + "|" + df['Name']) + r")\b"
-i = 1
-for post in posts:
-    if post.link_flair_text != 'Meme':
-        matches = re.findall(stock_regex, post.title)
-        if matches and len(matches[0]) > 1:
-            # Title of each post
-            posts_dict["Title"].append(post.title)
-            
-            # Text inside a post
-            posts_dict["Post Text"].append(post.selftext)
-            
-            # Unique ID of each post
-            posts_dict["ID"].append(post.id)
-            
-            # The score of a post
-            posts_dict["Score"].append(post.score)
-            
-            # Total number of comments inside the post
-            posts_dict["Total Comments"].append(post.num_comments)
-            
-            # URL of each post
-            posts_dict["Post URL"].append(post.url)
-
-            comment_str = ""
-            for comment in post.comments[:5]:
-                comment_str += (str(i) + " " + comment.body)
-                i += 1
-
-            posts_dict["Post Comments"].append(comment_str)
-            i = 1
-
-            posts_dict["Stock Keyword"].append(matches[0])
-
-# Saving the data in a pandas dataframe
-post_data = pd.DataFrame(posts_dict)
-# print(top_posts)
-
-post_data.to_csv("Filtered Post Data.csv", index=False)

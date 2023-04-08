@@ -26,21 +26,24 @@ from nltk.sentiment.util import *
 # tokens = nltk.word_tokenize(sentence)
 # print("tokens: " + str(tokens))
 
-sia = SentimentIntensityAnalyzer()
+def calculate_sentiment(csv_file):
+    sia = SentimentIntensityAnalyzer()
 
-df = pd.read_csv("Filtered Post Data.csv")
-print(df)
+    df = pd.read_csv(csv_file)
+    print(df)
 
-for index, row in df.iterrows():
-    polarity_score_title = sia.polarity_scores(row['Title'])
-
-
-    print("row " + str(index) + ": " + row['Title'])
-    print("Sentiment Analysis Compound Score for Title: " + str(polarity_score_title['compound']))
+    for index, row in df.iterrows():
+        polarity_score_title = sia.polarity_scores(row['Title'])
 
 
-    if (row['Post Comments']):
-        polarity_score_post_comments = sia.polarity_scores(str(row['Post Comments']))
-        print("Sentiment Analysis Compound Score for post comments: " + str(polarity_score_post_comments['compound']))
-    else:
-        print("Sentiment Analysis Compound Score for post comments: " + " no comments to analyze")
+        print("row " + str(index) + ": " + row['Title'])
+        print("Sentiment Analysis Compound Score for Title: " + str(polarity_score_title['compound']))
+
+
+        if (row['Post Comments']):
+            polarity_score_post_comments = sia.polarity_scores(str(row['Post Comments']))
+            print("Sentiment Analysis Compound Score for post comments: " + str(polarity_score_post_comments['compound']))
+        else:
+            print("Sentiment Analysis Compound Score for post comments: " + " no comments to analyze")
+
+calculate_sentiment("Filtered Post Data.csv")
