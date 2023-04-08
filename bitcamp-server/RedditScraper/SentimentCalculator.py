@@ -1,5 +1,4 @@
 import pandas as pd
-import nltk
 from nltk.classify import NaiveBayesClassifier
 from nltk.corpus import subjectivity
 from nltk.sentiment import SentimentAnalyzer
