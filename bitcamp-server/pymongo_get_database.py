@@ -1,10 +1,9 @@
 import pymongo
 from pymongo import MongoClient
+import os
 
 def insert_into_database(JSON_obj):
-
-    connection_string = "mongodb+srv://bitcamp-2023:zfGBxA65Bku2aCPr@bitcamp-2023.0bp6oqs.mongodb.net/test"
-    # database_name = "<database>"
+    connection_string = os.environ.get("MONGO_CONNECTION_STRING")
 
     # Create a MongoClient object
     client = pymongo.MongoClient(connection_string)
@@ -26,7 +25,7 @@ import pymongo
 
 def get_data_from_mongodb():
     # Create a MongoClient object
-    connection_string = "mongodb+srv://bitcamp-2023:zfGBxA65Bku2aCPr@bitcamp-2023.0bp6oqs.mongodb.net/test"
+    connection_string = os.environ.get("MONGO_CONNECTION_STRING")
     client = pymongo.MongoClient(connection_string)
 
     # Get the database
