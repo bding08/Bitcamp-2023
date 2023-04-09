@@ -38,4 +38,5 @@ def serialize(stock_obj):
         "stock_keyword" : str(stock_obj.stock_keyword),
         "tSentiment" : stock_obj.tSentiment,
         "cSentiment" : stock_obj.cSentiment,
+        "price_change_percentage" : stock_obj.price_change_percentage
     } 

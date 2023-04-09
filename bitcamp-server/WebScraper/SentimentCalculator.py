@@ -7,6 +7,7 @@ from nltk.sentiment import SentimentAnalyzer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.sentiment.util import *
 from models import Stock
+import stock_price_calculator
 
 # when running on your own laptop, uncomment the following below to download
 # necessary dependencies and NLTK libraries: 
@@ -39,9 +40,10 @@ def calculate_sentiment(csv_file):
 
         if (row['Post Comments']):
             polarity_score_post_comments = sia.polarity_scores(str(row['Post Comments']))
-            Stock_List.append(Stock(row['Stock Keyword'], "{:.2f}".format(polarity_score_title['compound']),"{:.2f}".format(polarity_score_post_comments['compound'])))
+            Stock_List.append(Stock(row['Stock Keyword'], "{:.2f}".format(polarity_score_title['compound']),"{:.2f}".format(polarity_score_post_comments['compound']), "{:.2f}".format(stock_price_calculator.stock_price_calculator(stock_price_calculator.getTicker(row['Stock Keyword'])))))
         else:
-            Stock_List.append(Stock(row['Stock Keyword'], "{:.2f}".format(polarity_score_title['compound']),"No Comments"))
+            Stock_List.append(Stock(row['Stock Keyword'], "{:.2f}".format(polarity_score_title['compound']),"No Comments", "{:.2f}".format(stock_price_calculator.stock_price_calculator(stock_price_calculator.getTicker(row['Stock Keyword'])))))
     return Stock_List
 
 # calculate_sentiment(WebScraper.reddit_scraper("Investing"))
+

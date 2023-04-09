@@ -15,7 +15,7 @@
       <th scope="col">Stock Keyword</th>
       <th scope="col">Post Sentinment</th>
       <th scope="col">Comments Sentiment</th>
-
+      <th scope="col">Stock Percentage Change Over 30 Days</th>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +23,8 @@
     <tr>
       <td>{{stock.stock_keyword}}</td>
       <td>{{stock.tSentiment}}</td>
-      <td>@{{stock.cSentiment}}</td>
+      <td>{{stock.cSentiment}}</td>
+      <td>{{stock.price_change_percentage}}%</td>
     </tr>
     {% endfor %}
   </tbody>
