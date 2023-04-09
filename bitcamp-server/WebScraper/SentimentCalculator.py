@@ -39,9 +39,9 @@ def calculate_sentiment(csv_file):
 
         if (row['Post Comments']):
             polarity_score_post_comments = sia.polarity_scores(str(row['Post Comments']))
-            Stock_List.append(Stock(row['Stock Keyword'], str(polarity_score_title['compound']),str(polarity_score_post_comments['compound'])))
+            Stock_List.append(Stock(row['Stock Keyword'], "{:.2f}".format(polarity_score_title['compound']),"{:.2f}".format(polarity_score_post_comments['compound'])))
         else:
-            Stock_List.append(Stock(row['Stock Keyword'], str(polarity_score_title['compound']),"No Comments"))
+            Stock_List.append(Stock(row['Stock Keyword'], "{:.2f}".format(polarity_score_title['compound']),"No Comments"))
     return Stock_List
 
 # calculate_sentiment(WebScraper.reddit_scraper("Investing"))

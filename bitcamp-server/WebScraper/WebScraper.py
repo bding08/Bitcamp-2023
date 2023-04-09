@@ -49,7 +49,7 @@ def reddit_scraper(subreddit):
     df = pd.read_csv("stock_info_filtered.csv")
 
     # Scraping the top posts of the current month
-    posts = subreddit.top(time_filter = "month", limit = 5)
+    posts = subreddit.top(time_filter = "month", limit = 200)
     
     posts_dict = {"Title": [], 
                   "Post Text": [],
