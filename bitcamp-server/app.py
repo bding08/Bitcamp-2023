@@ -16,12 +16,11 @@ def hello_world():
 @app.route("/")
 def index():
     
-    data = WebScraper.SentimentCalculator.calculate_sentiment(WebScraper.WebScraper.reddit_scraper("Investing")) 
+    # data = WebScraper.SentimentCalculator.calculate_sentiment(WebScraper.WebScraper.reddit_scraper("Investing")) 
+    # json_obj_list = [serialize(x) for x in data]
 
-    json_obj_list = [serialize(x) for x in data]
-
-    for json_obj in json_obj_list:
-        pymongo_get_database.insert_into_database(json_obj)
+    # for json_obj in json_obj_list:
+    #     pymongo_get_database.insert_into_database(json_obj)
 
     final_list = pymongo_get_database.get_data_from_mongodb()
     print(final_list)
