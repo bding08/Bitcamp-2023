@@ -8,12 +8,8 @@ import yfinance as yf
 def stock_price_calculator(stock_ticker):
     end_date = datetime.datetime.today().strftime('%Y-%m-%d')
     start_date = (datetime.datetime.today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d')
-
     stock = yf.Ticker(stock_ticker)
     hist = stock.history()
-    # print(hist.head)
-    # hist = stock.history(start=start_date, end=end_date)
-    # print(hist)
     price_change = (hist['Close'][-1] - hist['Close'][0]) / hist['Close'][0] * 100
     return price_change
 
@@ -54,5 +50,6 @@ def getTicker(company_name):
     company_code = data['quotes'][0]['symbol']
     return company_code
 
+# debugging purposes
 # print(getTicker("First Republic Bank"))
 # stock_price_calculator(getTicker("First Republic Bank"))
