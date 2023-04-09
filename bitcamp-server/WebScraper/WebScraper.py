@@ -2,14 +2,14 @@ import praw
 import pandas as pd
 import re
 from urllib.request import urlopen, Request
-from os import environ
+
 
 def reddit_scraper(subreddit):
     # Assigns PRAW API object to a variable
-    reddit_read_only = praw.Reddit(    
-    client_id=environ.get("REDDIT_CLIENT_ID"),                  # your client id
-    client_secret=environ.get("REDDIT_CLIENT_SECRET"),          # your client secret
-    user_agent="Brian Ding")                                    # your user agent
+    reddit_read_only = praw.Reddit(
+        client_id="hVGVldw07s3UNW4rd3zlSQ",                  # your client id
+        client_secret="OsFqtnOsdyXyeTXXK6YhD_yjWV5uyg",      # your client secret
+        user_agent="Brian Ding")                             # your user agent
     
     #Reads data from subreddit
     subreddit = reddit_read_only.subreddit(subreddit)

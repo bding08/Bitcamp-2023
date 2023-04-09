@@ -15,7 +15,6 @@ def hello_world():
 """
 @app.route("/")
 def index():
-    
     # data = WebScraper.SentimentCalculator.calculate_sentiment(WebScraper.WebScraper.reddit_scraper("Investing")) 
 
     # json_obj_list = [serialize(x) for x in data]
