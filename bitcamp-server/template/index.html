@@ -9,7 +9,28 @@
     </div>
 </div>
 
-<div class="row">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Stock Keyword</th>
+      <th scope="col">Post Sentinment</th>
+      <th scope="col">Comments Sentiment</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for stock in stocks %}
+    <tr>
+      <td>{{stock.stock_keyword}}</td>
+      <td>{{stock.tSentiment}}</td>
+      <td>@{{stock.cSentiment}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</html>
+
+<!-- <div class="row">
     <div class="col col-md-6 offset-md-3">
       <div class="row alert alert-warning bg-dark text-white">
           <span class="col col-3 mt-0 h1 text-center">Stock Keyword</span>
@@ -25,6 +46,6 @@
       {% endfor %}
     </div>
   </div>
-</html>
+</html> -->
 
 {%- endblock %}
