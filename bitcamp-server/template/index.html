@@ -13,6 +13,8 @@
   th {
     font-size: 24px;
     text-align: center;
+    position: relative; /* needed for tooltip positioning */
+    cursor: help; /* show pointer cursor on hover */
   }
   td {
     font-size: 16px;
@@ -23,10 +25,10 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">Stock Keyword</th>
-      <th scope="col">Post Sentinment</th>
-      <th scope="col">Comments Sentiment</th>
-      <th scope="col">Stock Percentage Change Over Past 30 Days</th>
+      <th scope="col" data-toggle="tooltip" data-placement="top" title="Keyword used to search for stock mentions">Stock Keyword</th>
+      <th scope="col" data-toggle="tooltip" data-placement="top" title="Average sentiment score of all posts mentioning this stock">Post Sentiment</th>
+      <th scope="col" data-toggle="tooltip" data-placement="top" title="Average sentiment score of all comments mentioning this stock">Comments Sentiment</th>
+      <th scope="col" data-toggle="tooltip" data-placement="top" title="Percentage change in stock price over the past 30 days">Stock Percentage Change Over Past 30 Days</th>
     </tr>
   </thead>
   <tbody>
@@ -42,4 +44,12 @@
 </table>
 </html>
 
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
 {%- endblock %}
+
+
