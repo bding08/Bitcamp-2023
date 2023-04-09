@@ -18,42 +18,9 @@
     font-size: 16px;
     text-align: center;
   }
-
-  
 </style>
+
 <table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Stock Keyword <i class="bi bi-info-circle" data-toggle="tooltip" title="The keyword used to search for this stock on Reddit"></i></th>
-      <th scope="col">Post Sentiment <i class="bi bi-info-circle" data-toggle="tooltip" title="The sentiment of Reddit posts about this stock"></i></th>
-      <th scope="col">Comments Sentiment <i class="bi bi-info-circle" data-toggle="tooltip" title="The sentiment of comments on Reddit posts about this stock"></i></th>
-      <th scope="col">Stock Percentage Change Over 30 Days <i class="bi bi-info-circle" data-toggle="tooltip" title="The percentage change in stock price over the last 30 days"></i></th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for stock in stocks %}
-    <tr>
-      <td>{{stock.stock_keyword}}</td>
-      <td>{{stock.tSentiment}}</td>
-      <td>{{stock.cSentiment}}</td>
-      <td>{{stock.price_change_percentage}}%</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-<!-- Include the Bootstrap JavaScript file -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0/js/bootstrap.min.js"></script>
-
-<!-- Initialize tooltips -->
-<script>
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip(); 
-});
-</script>
-
-<!-- <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">Stock Keyword</th>
@@ -72,25 +39,7 @@ $(document).ready(function(){
     </tr>
     {% endfor %}
   </tbody>
-</table> -->
+</table>
 </html>
-
-<!-- <div class="row">
-    <div class="col col-md-6 offset-md-3">
-      <div class="row alert alert-warning bg-dark text-white">
-          <span class="col col-3 mt-0 h1 text-center">Stock Keyword</span>
-          <span class="col col-3 mt-0 h1 border-left border-light">Post Sentinment</span>
-          <span class="col col-4 mt-0 h1 border-left border-light text-right">Comments Sentiment</span>
-        </div>
-        {% for stock in stocks %}
-        <div class="row alert alert-warning">
-          <span class="col col-3 mt-0 h1 text-center">{{stock.stock_keyword}}</span>
-          <span class="col col-3 mt-0 border-left border-dark h1 text-truncate">{{stock.tSentiment}}</span>
-          <span class="col col-4 mt-0 border-left border-dark h1 text-right">{{stock.cSentiment}}</span>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-</html> -->
 
 {%- endblock %}
