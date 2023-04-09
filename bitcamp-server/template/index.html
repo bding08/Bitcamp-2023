@@ -3,19 +3,31 @@
 
 {% block content %}
 <html>
-<div class="row mt-4">
-    <div class="col col-md-6 offset-md-3 alert alert-primary bg-danger text-white text-center">
-      <span class="h1">Stocks Performance vs Reddit Sentiment</span>
+<div class="row mt-0">
+    <div class="col-12 alert alert-primary bg-danger text-white text-center">
+      <span class="display-1 font-weight-bold" style ="font-family: 'Helvetica Neue', sans-serif;">Stocks' Performance vs r/Investing Sentiment</span>
     </div>
 </div>
 
+<style>
+  th {
+    font-size: 24px;
+    text-align: center;
+  }
+  td {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  
+</style>
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col">Stock Keyword</th>
-      <th scope="col">Post Sentinment</th>
-      <th scope="col">Comments Sentiment</th>
-      <th scope="col">Stock Percentage Change Over 30 Days</th>
+      <th scope="col">Stock Keyword <i class="bi bi-info-circle" data-toggle="tooltip" title="The keyword used to search for this stock on Reddit"></i></th>
+      <th scope="col">Post Sentiment <i class="bi bi-info-circle" data-toggle="tooltip" title="The sentiment of Reddit posts about this stock"></i></th>
+      <th scope="col">Comments Sentiment <i class="bi bi-info-circle" data-toggle="tooltip" title="The sentiment of comments on Reddit posts about this stock"></i></th>
+      <th scope="col">Stock Percentage Change Over 30 Days <i class="bi bi-info-circle" data-toggle="tooltip" title="The percentage change in stock price over the last 30 days"></i></th>
     </tr>
   </thead>
   <tbody>
@@ -29,6 +41,38 @@
     {% endfor %}
   </tbody>
 </table>
+
+<!-- Include the Bootstrap JavaScript file -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0/js/bootstrap.min.js"></script>
+
+<!-- Initialize tooltips -->
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+
+<!-- <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Stock Keyword</th>
+      <th scope="col">Post Sentinment</th>
+      <th scope="col">Comments Sentiment</th>
+      <th scope="col">Stock Percentage Change Over Past 30 Days</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for stock in stocks %}
+    <tr>
+      <td>{{stock.stock_keyword}}</td>
+      <td>{{stock.tSentiment}}</td>
+      <td>{{stock.cSentiment}}</td>
+      <td>{{stock.price_change_percentage}}%</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table> -->
 </html>
 
 <!-- <div class="row">

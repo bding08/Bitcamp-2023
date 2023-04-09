@@ -21,13 +21,13 @@ from pymongo import MongoClient
 def insert_into_database(JSON_obj):
 
     connection_string = "mongodb+srv://bitcamp-2023:zfGBxA65Bku2aCPr@bitcamp-2023.0bp6oqs.mongodb.net/test"
-    database_name = "<database>"
+    # database_name = "<database>"
 
     # Create a MongoClient object
     client = pymongo.MongoClient(connection_string)
 
     # Get the database
-    db = client[database_name]
+    # db = client[database_name]
 
     # create a database object
     mydb = client["mydatabase"]
