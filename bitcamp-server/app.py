@@ -15,6 +15,7 @@ def hello_world():
 """
 @app.route("/")
 def index():
+    
     data = WebScraper.SentimentCalculator.calculate_sentiment(WebScraper.WebScraper.reddit_scraper("Investing")) 
 
     json_obj_list = [serialize(x) for x in data]
@@ -22,7 +23,9 @@ def index():
     for json_obj in json_obj_list:
         pymongo_get_database.insert_into_database(json_obj)
 
-    return render_template("index.html", stocks=json_obj_list)
+    final_list = pymongo_get_database.get_data_from_mongodb()
+    print(final_list)
+    return render_template("index.html", stocks=final_list)
 
    #data = [[f"Row {i+1}, Col {j+1}" for j in range(3)] for i in range(10)]
    #return render_template('index.html', data=data)
