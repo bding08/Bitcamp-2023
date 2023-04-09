@@ -40,10 +40,9 @@ def calculate_sentiment(csv_file):
 
         if (row['Post Comments']):
             polarity_score_post_comments = sia.polarity_scores(str(row['Post Comments']))
-            Stock_List.append(Stock(row['Stock Keyword'], "{:.2f}".format(polarity_score_title['compound']),"{:.2f}".format(polarity_score_post_comments['compound']), "{:.2f}".format(stock_price_calculator.stock_price_calculator(stock_price_calculator.getTicker(row['Stock Keyword'])))))
+            Stock_List.append(Stock(str(stock_price_calculator.getTicker(row['Stock Keyword'])), "{:.2f}".format(polarity_score_title['compound']),"{:.2f}".format(polarity_score_post_comments['compound']), "{:.2f}".format(stock_price_calculator.stock_price_calculator(stock_price_calculator.getTicker(row['Stock Keyword'])))))
         else:
-            Stock_List.append(Stock(row['Stock Keyword'], "{:.2f}".format(polarity_score_title['compound']),"No Comments", "{:.2f}".format(stock_price_calculator.stock_price_calculator(stock_price_calculator.getTicker(row['Stock Keyword'])))))
+            Stock_List.append(Stock(str(stock_price_calculator.getTicker(row['Stock Keyword'])), "{:.2f}".format(polarity_score_title['compound']),"No Comments", "{:.2f}".format(stock_price_calculator.stock_price_calculator(stock_price_calculator.getTicker(row['Stock Keyword'])))))
     return Stock_List
 
-# calculate_sentiment(WebScraper.reddit_scraper("Investing"))
 

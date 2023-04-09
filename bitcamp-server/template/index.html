@@ -3,9 +3,12 @@
 
 {% block content %}
 <html>
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+</head>
 <div class="row mt-0">
     <div class="col-12 alert alert-primary bg-danger text-white text-center">
-      <span class="display-1 font-weight-bold" style ="font-family: 'Helvetica Neue', sans-serif;">Stocks' Performance vs r/Investing Sentiment</span>
+      <span class="display-1 font-weight-bold" style ="font-family: 'Helvetica Neue', sans-serif;">Stock Performance vs r/Investing Sentiment</span>
     </div>
 </div>
 
@@ -20,15 +23,41 @@
     font-size: 16px;
     text-align: center;
   }
+  .positive {
+    color: green
+  }
+  .negative {
+    color: red;
+  }
+  
+
 </style>
 
 <table class="table table-hover">
   <thead>
     <tr>
-      <th scope="col" data-toggle="tooltip" data-placement="top" title="Keyword used to search for stock mentions">Stock Keyword</th>
-      <th scope="col" data-toggle="tooltip" data-placement="top" title="Average sentiment score of all posts mentioning this stock">Post Sentiment</th>
-      <th scope="col" data-toggle="tooltip" data-placement="top" title="Average sentiment score of all comments mentioning this stock">Comments Sentiment</th>
-      <th scope="col" data-toggle="tooltip" data-placement="top" title="Percentage change in stock price over the past 30 days">Stock Percentage Change Over Past 30 Days</th>
+      <th scope="col" data-toggle="tooltip" data-placement="top" title="Keyword used to search for stock mentions">
+        Stock Keyword 
+        <i class="bi bi-info-circle"></i>
+      </th>
+      <th scope="col" data-toggle="tooltip" data-placement="top" title="Average sentiment score of all posts mentioning this stock">
+        Post Sentiment 
+        <i class="bi bi-info-circle"></i>
+      </th>
+      <th scope="col" data-toggle="tooltip" data-placement="top" title="Average sentiment score of all comments mentioning this stock">
+        Comments Sentiment 
+        <i class="bi bi-info-circle"></i>
+      </th>
+      <th scope="col" data-toggle="tooltip" data-placement="top" title="Percentage change in stock price over the past 30 days">
+        Stock % Change Over Past 30 Days 
+        <i class="bi bi-info-circle"></i>
+      </th>
+
+      <th scope="col" data-toggle="tooltip" data-placement="top" title="Correlation between r/Investing sentiment about a given stock and its actual performance">
+        Correlation
+        <i class="bi bi-info-circle"></i>
+      </th>
+      
     </tr>
   </thead>
   <tbody>
@@ -37,10 +66,37 @@
       <td>{{stock.stock_keyword}}</td>
       <td>{{stock.tSentiment}}</td>
       <td>{{stock.cSentiment}}</td>
-      <td>{{stock.price_change_percentage}}%</td>
+      {% set last_col = stock.price_change_percentage|replace('%','')|float %}
+     
+      <td>
+          {% if stock.price_change_percentage|float > 0 %}
+          <span class="text-success font-weight-bold">&uarr;</span>
+          <span style="color: green;">
+              {{stock.price_change_percentage}}%
+          </span>
+          {% else %}
+          <span class="text-danger font-weight-bold">&darr;</span>
+          <span style="color: red;">
+              {{stock.price_change_percentage}}%
+          </span>
+          {% endif %}
+      </td>
+      {% set second_last_col = (stock.cSentiment|float + stock.tSentiment|float) %}
+      {% set correlation = 'Positive' if last_col > 0 and second_last_col > 0 else 'Negative' %}
+      {% set correlation = 'Positive' if last_col < 0 and second_last_col < 0 else 'Negative' %}
+      {% set arrow = 'up' if correlation == 'Positive' else 'down' if correlation == 'Negative' else '' %}
+      <td class="{{'positive' if correlation == 'Positive' else 'negative' if correlation == 'Negative' else 'neutral'}}">
+      {% if arrow == 'up' %}
+          <span class="text-success font-weight-bold">&uarr;</span>
+      {% elif arrow == 'down' %}
+          <span class="text-danger font-weight-bold">&darr;</span>
+      {% endif %}
+      {{correlation}}
+      </td>
     </tr>
     {% endfor %}
   </tbody>
+
 </table>
 </html>
 
@@ -49,6 +105,7 @@
     $('[data-toggle="tooltip"]').tooltip()
   })
 </script>
+
 
 {%- endblock %}
 
