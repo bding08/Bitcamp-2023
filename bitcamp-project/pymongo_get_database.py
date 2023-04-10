@@ -33,13 +33,9 @@ def get_data_from_mongodb():
 
     # # Get the collection
     collection = db["stocks"]
-    print("collection: " + str(collection))
 
     # # Retrieve data from the collection based on the query
-    # data = collection.find()
+    data = collection.find()
 
     return data
 
-
-
-get_data_from_mongodb()
