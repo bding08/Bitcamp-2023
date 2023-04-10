@@ -2,13 +2,17 @@ import praw
 import pandas as pd
 import re
 from urllib.request import urlopen, Request
-
+from dotenv import load_dotenv
+import os
 
 def reddit_scraper(subreddit):
+    # Load variables from the .env file
+    load_dotenv()
+
     # Assigns PRAW API object to a variable
     reddit_read_only = praw.Reddit(
-        client_id="hVGVldw07s3UNW4rd3zlSQ",                  # your client id
-        client_secret="OsFqtnOsdyXyeTXXK6YhD_yjWV5uyg",      # your client secret
+        client_id = os.getenv("CLIENT_ID"),                  # your client id
+        client_secret = os.getenv("CLIENT_SECRET"),      # your client secret
         user_agent="Brian Ding")                             # your user agent
     
     #Reads data from subreddit

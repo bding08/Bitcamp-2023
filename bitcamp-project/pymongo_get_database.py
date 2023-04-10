@@ -1,8 +1,14 @@
 import pymongo
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
+
+# Load variables from the .env file
+load_dotenv()
+
 
 def insert_into_database(JSON_obj):
-    connection_string = "mongodb+srv://bitcamp-2023:zfGBxA65Bku2aCPr@bitcamp-2023.0bp6oqs.mongodb.net/test"
+    connection_string = os.getenv("CONNECTION_STRING")
 
     # Create a MongoClient object
     client = pymongo.MongoClient(connection_string)
