@@ -7,3 +7,4 @@ We started by harvesting our data by web scraping Reddit using an API library ca
 
 In the future, we want to make the data a lot more comprehensive and provide a better user interface to allow for customization. We would like to allow the user to choose which subreddit to gather data on, and potentially expand to be a general sentiment tracker for subreddits and topics.
 
+This project was the winner of Bitcamp 2023's "Best Use of MongoDB Atlas" Category
